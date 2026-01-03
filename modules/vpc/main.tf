@@ -8,4 +8,8 @@ resource "google_compute_subnetwork" "ledger_subnet" {
   ip_cidr_range = var.cidr_range
   region        = var.region
   network       = google_compute_network.ledger_vpc_network.id
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
