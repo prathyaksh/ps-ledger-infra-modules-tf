@@ -9,3 +9,7 @@ output "subnet_self_link" {
 output "network_id" {
   value = google_compute_network.ledger_vpc_network.self_link
 }
+
+output "network_name" {
+  value = google_compute_network.ledger_vpc_network.name
+}
