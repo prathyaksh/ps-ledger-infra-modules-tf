@@ -6,6 +6,7 @@ resource "google_compute_firewall" "allow_iap_ssh" {
     protocol = "tcp"
     ports    = ["22"]
   }
+  target_tags = ["ssh-access"]
 
   # This is the magic IP range. It is Google's internal IAP proxy.
   source_ranges = ["35.235.240.0/20"]
