@@ -16,4 +16,8 @@ resource "google_compute_instance" "finance_app_instance" {
     network = var.network_self_link
     subnetwork = var.subnet_self_link
 }
+  service_account {
+    scopes = ["cloud-platform"]
+    email  = var.email
+  }
 }

@@ -27,3 +27,8 @@ variable "subnet_self_link" {
   description = "The self link of the subnet"
   type        = string
 }
+
+variable "email"  {
+  description = "Email of the service account"
+  type        = string
+}
