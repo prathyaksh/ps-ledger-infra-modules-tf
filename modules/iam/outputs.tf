@@ -1,3 +1,3 @@
 output "email" {
-  value = google_service_account.fin_ledger_vm_sa.email
+  value = google_service_account.sa_creation[*].email
 }
