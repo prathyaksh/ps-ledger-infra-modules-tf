@@ -1,10 +1,34 @@
-variable "sa_id" {
-  description = "ID of the service account "
-  type        = string
-}
-
 variable "project_id" {
-  description = "ID of the project where resources will be created"
   type        = string
+  description = "The ID of the Google Cloud project"
 }
 
+variable "roles_list" {
+  type        = list(string)
+  default     = []
+  description = "List of IAM roles to assign"
+}
+
+variable "member_id" {
+  type        = string
+  default     = ""
+  description = "The member ID (e.g., user:email@domain.com, serviceAccount:sa@project.iam.gserviceaccount.com)"
+}
+
+variable "sa_id" {
+  type        = string
+  default     = ""
+  description = "Service account ID or email"
+}
+
+variable "display_name" {
+  type        = string
+  default     = ""
+  description = "Display name for the service account"
+}
+
+variable "create_sa" {
+  type        = bool
+  default     = false
+  description = "Whether to create a new service account"
+}
