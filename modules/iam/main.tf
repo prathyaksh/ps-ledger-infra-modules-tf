@@ -4,6 +4,9 @@ resource "google_service_account" "sa_creation" {
   account_id   = var.sa_id
   display_name = var.display_name
   project      = var.project_id
+  lifecycle {
+    create_before_destroy = false
+  }
 }
 
 # Resource B: Assigns roles to ANY member (Independent)
