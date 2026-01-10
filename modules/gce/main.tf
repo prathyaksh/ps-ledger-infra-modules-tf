@@ -19,6 +19,8 @@ resource "google_compute_instance" "vm_instance" {
 
   allow_stopping_for_update = true
 
+  metadata_startup_script = var.startup_script
+
   service_account {
     scopes = ["cloud-platform"]
     email  = var.email
