@@ -1,13 +1,26 @@
-resource "google_compute_firewall" "allow_iap_ssh" {
-  name    = "${var.network_name}-allow-iap-ssh"
+resource "google_compute_firewall" "rules" {
+  for_each = var.firewall_rules
+
+  name    = "${var.network_name}-${each.key}"
   network = var.network_name
-
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
+  
+  # This makes the rule either ALLOW or DENY based on your input
+  dynamic "allow" {
+    for_each = each.value.action == "allow" ? [1] : []
+    content {
+      protocol = each.value.protocol
+      ports    = each.value.ports
+    }
   }
-  target_tags = ["ssh-access"]
 
-  # This is the magic IP range. It is Google's internal IAP proxy.
-  source_ranges = ["35.235.240.0/20"]
+  dynamic "deny" {
+    for_each = each.value.action == "deny" ? [1] : []
+    content {
+      protocol = each.value.protocol
+      ports    = each.value.ports
+    }
+  }
+
+  source_ranges = each.value.source_ranges
+  target_tags   = each.value.target_tags
 }

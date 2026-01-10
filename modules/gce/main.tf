@@ -1,22 +1,24 @@
-resource "google_compute_instance" "finance_app_instance" {
+
+resource "google_compute_instance" "vm_instance" {
   name         = var.instance_name
   machine_type = var.machine_type
   zone         = var.zone
+  tags         = var.target_tags
 
-  tags = var.target_tags
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2204-lts"
-      labels = {
-        my_label = "finance-ledger-vm"
-      }
+      image  = var.os_image
+      labels = var.labels
     }
   }
+
   network_interface {
-    network = var.network_self_link
+    network    = var.network_self_link
     subnetwork = var.subnet_self_link
-}
+  }
+
   allow_stopping_for_update = true
+
   service_account {
     scopes = ["cloud-platform"]
     email  = var.email

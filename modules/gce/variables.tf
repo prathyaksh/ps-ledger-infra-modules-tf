@@ -32,3 +32,18 @@ variable "email"  {
   description = "Email of the service account"
   type        = string
 }
+
+variable "os_image" {
+  description = "The OS image for the boot disk"
+  type        = string
+}
+variable "labels" {
+  description = "Labels to apply to the instance"
+  type        = map(string)
+  default     = {}
+}
+
+variable "startup_script" {
+  type    = string
+  default = ""
+}
