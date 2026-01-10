@@ -1,16 +1,15 @@
-variable "network_name" {
-  description = "The name of the VPC network"
-  type        = string
-}
 variable "firewall_rules" {
-  description = "A map of custom firewall rules to create"
+  description = "Map of firewall rules"
   type = map(object({
-    allow = list(object({
-      protocol = string
-      ports    = list(string)
-    }))
+    action        = string          # Added this
+    protocol      = string
+    ports         = list(string)
     source_ranges = list(string)
     target_tags   = list(string)
   }))
-  default = {}
+}
+
+variable "network_name" {
+  description = "The name of the network to which the firewall rules will be applied"
+  type        = string
 }
