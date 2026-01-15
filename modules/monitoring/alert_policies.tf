@@ -58,6 +58,11 @@ resource "google_monitoring_alert_policy" "absence_alert" {
     condition_absent {
       filter   = var.absence_alerts["traffic"].filter
       duration = var.absence_alerts["traffic"].duration
+
+      aggregations {
+        alignment_period     = "60s"
+        per_series_aligner   = "ALIGN_RATE"
+      }
     }
   }
 
