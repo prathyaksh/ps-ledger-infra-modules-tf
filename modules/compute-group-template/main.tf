@@ -1,5 +1,5 @@
 resource "google_compute_instance_template" "gce_vm_template" {
-  name_prefix  = "${var.prefix}-template"
+  name_prefix  = "${var.prefix}-template-"
   machine_type = var.machine_type
   region       = var.region
 
