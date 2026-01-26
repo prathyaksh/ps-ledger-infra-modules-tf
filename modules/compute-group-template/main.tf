@@ -15,8 +15,8 @@ resource "google_compute_instance_template" "gce_vm_template" {
   network_interface {
     network    = var.network_id
     subnetwork = var.subnet_id
-    # Keeps a public IP for now so you can test via browser
-    access_config {} 
+    # this assigns an external IP everytime an instanc eis created by MIG
+    #access_config {} 
   }
 
   # This is the "Instruction" for the software (Nginx)
