@@ -28,4 +28,5 @@ resource "google_compute_instance_template" "gce_vm_template" {
   lifecycle {
     create_before_destroy = true
   }
+  
 }
