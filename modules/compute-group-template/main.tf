@@ -10,6 +10,10 @@ resource "google_compute_instance_template" "gce_vm_template" {
     boot         = true
     disk_type    = var.disk_type
   }
+  service_account {
+    email  = var.service_account_email
+    scopes = ["cloud-platform"] # Required for Ops Agent to talk to Google APIs
+  }
 
   # This is the "Instruction" for the network
   network_interface {
