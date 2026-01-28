@@ -4,10 +4,6 @@ variable "db_key_name" {
   
 }
 
-variable "key_ring_name" {
-  description = "The name of the KMS Key Ring"
-  type        = string
-}
 variable "name" {
   description = "The name prefix for the KMS resources"
   type        = string
