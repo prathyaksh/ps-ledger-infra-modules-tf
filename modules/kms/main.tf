@@ -8,5 +8,3 @@ resource "google_kms_crypto_key" "db_key" {
   key_ring = google_kms_key_ring.keyring.id
   purpose  = "ENCRYPT_DECRYPT"
 }
-
-output "key_id" { value = google_kms_crypto_key.db_key.id }
