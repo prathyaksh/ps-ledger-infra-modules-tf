@@ -15,7 +15,6 @@ resource "google_sql_database_instance" "postgres_instance" {
       private_network = var.vpc_id
     }
 
-    # All these are now driven by variables!
     availability_type = var.availability_type
     
     backup_configuration {
@@ -37,9 +36,12 @@ resource "google_sql_database" "database" {
   instance = google_sql_database_instance.postgres_instance.name
 }
 
-# The User (The "Librarian")
+data "google_secret_manager_secret_version" "db_password" {
+  secret = "${var.name}-db-password"
+}
+
 resource "google_sql_user" "db_user" {
   name     = var.db_user_name
   instance = google_sql_database_instance.postgres_instance.name
-  password = var.db_password
+  password = data.google_secret_manager_secret_version.db_password.secret_data
 }

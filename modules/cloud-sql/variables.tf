@@ -1,8 +1,3 @@
-variable "instance_name_prefix" {
-  description = "Prefix for naming Cloud SQL instances"
-  type        = string
-  
-}
 variable "environment" {
   description = "Deployment environment (e.g., dev, staging, prod)"
   type        = string
@@ -91,4 +86,9 @@ variable "disk_type" {
   description = "The type of disk to use for the instance (e.g., PD_SSD, PD_HDD)"
   type        = string
   default     = "PD_SSD"
+}
+
+variable "name" {
+  description = "The name prefix for the Cloud SQL instance"
+  type        = string
 }
