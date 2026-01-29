@@ -16,3 +16,19 @@ resource "google_project_iam_member" "role_assignment" {
   role     = each.key
   member   = var.member_id
 }
+
+# Creates Service agents
+
+resource "google_project_service_identity" "service_identity" {
+  provider = google-beta
+  project  = var.project_id
+  service  = var.service_name
+}
+
+# Generic KMS binding for that identity
+resource "google_kms_crypto_key_iam_member" "kms_access" {
+  crypto_key_id = var.kms_key_id
+  role          = var.role
+  member        = "serviceAccount:${google_project_service_identity.service_identity.email}"
+}
+

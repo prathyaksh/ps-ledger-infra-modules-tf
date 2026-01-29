@@ -32,3 +32,17 @@ variable "create_sa" {
   default     = false
   description = "Whether to create a new service account"
 }
+
+variable "service_name" {
+  type        = string
+  description = "The service for which to create the service identity (e.g., sqladmin.googleapis.com)"
+}
+
+variable "kms_key_id" {
+  type        = string
+  description = "The ID of the KMS Crypto Key for encryption"
+}
+variable "role" {
+  type        = string
+  description = "The IAM role to assign to the service identity for KMS access"
+}
