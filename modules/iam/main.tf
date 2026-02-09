@@ -14,19 +14,24 @@ resource "google_project_iam_member" "role_assignment" {
   member   = var.member_id
 }
 
-# Resource C: Creates Service agents (NOW CONDITIONAL)
+# Resource C: Creates Service agents (NOW PROTECTED)
 resource "google_project_service_identity" "service_identity" {
-  count    = var.service_name != null ? 1 : 0 # Only runs if service_name is provided
+  # ONLY run if a service name is actually provided
+  count    = var.service_name != null ? 1 : 0 
+  
   provider = google-beta
   project  = var.project_id
   service  = var.service_name
 }
 
-# Resource D: Generic KMS binding (NOW CONDITIONAL)
+# Resource D: Generic KMS binding (NOW PROTECTED)
 resource "google_kms_crypto_key_iam_member" "kms_access" {
-  count         = var.kms_key_id != null ? 1 : 0 # Only runs if kms_key_id is provided
+  # ONLY run if a KMS Key ID is actually provided
+  count         = var.kms_key_id != null ? 1 : 0 
+  
   crypto_key_id = var.kms_key_id
   role          = var.role
-  # Use [0] because count makes the resource a list
-  member        = length(google_project_service_identity.service_identity) > 0 ? "serviceAccount:${google_project_service_identity.service_identity[0].email}" : var.member_id
+  
+  # Logic: Use the identity above if it exists, otherwise use the member_id variable
+  member        = var.service_name != null ? "serviceAccount:${google_project_service_identity.service_identity[0].email}" : var.member_id
 }
