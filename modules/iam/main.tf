@@ -4,9 +4,6 @@ resource "google_service_account" "sa_creation" {
   account_id   = var.sa_id
   display_name = var.display_name
   project      = var.project_id
-  lifecycle {
-    create_before_destroy = false
-  }
 }
 
 # Resource B: Assigns roles to ANY member (Independent)
@@ -17,18 +14,19 @@ resource "google_project_iam_member" "role_assignment" {
   member   = var.member_id
 }
 
-# Creates Service agents
-
+# Resource C: Creates Service agents (NOW CONDITIONAL)
 resource "google_project_service_identity" "service_identity" {
+  count    = var.service_name != null ? 1 : 0 # Only runs if service_name is provided
   provider = google-beta
   project  = var.project_id
   service  = var.service_name
 }
 
-# Generic KMS binding for that identity
+# Resource D: Generic KMS binding (NOW CONDITIONAL)
 resource "google_kms_crypto_key_iam_member" "kms_access" {
+  count         = var.kms_key_id != null ? 1 : 0 # Only runs if kms_key_id is provided
   crypto_key_id = var.kms_key_id
   role          = var.role
-  member        = "serviceAccount:${google_project_service_identity.service_identity.email}"
+  # Use [0] because count makes the resource a list
+  member        = length(google_project_service_identity.service_identity) > 0 ? "serviceAccount:${google_project_service_identity.service_identity[0].email}" : var.member_id
 }
-
