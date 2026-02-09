@@ -17,7 +17,7 @@ variable "member_id" {
 
 variable "sa_id" {
   type        = string
-  default     = ""
+  default     = null
   description = "Service account ID or email"
 }
 
@@ -36,13 +36,13 @@ variable "create_sa" {
 variable "service_name" {
   type        = string
   description = "The service for which to create the service identity (e.g., sqladmin.googleapis.com)"
-  default = ""
+  default = null
 }
 
 variable "kms_key_id" {
   type        = string
   description = "The ID of the KMS Crypto Key for encryption"
-  default = ""
+  default = null
 }
 variable "role" {
   type        = string

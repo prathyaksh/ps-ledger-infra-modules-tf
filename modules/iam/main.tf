@@ -14,9 +14,8 @@ resource "google_project_iam_member" "role_assignment" {
   member   = var.member_id
 }
 
-# Resource C: Creates Service agents (NOW PROTECTED)
+# Resource C: Creates Service agents
 resource "google_project_service_identity" "service_identity" {
-  # ONLY run if a service name is actually provided
   count    = var.service_name != null ? 1 : 0 
   
   provider = google-beta
@@ -24,14 +23,13 @@ resource "google_project_service_identity" "service_identity" {
   service  = var.service_name
 }
 
-# Resource D: Generic KMS binding (NOW PROTECTED)
+# Resource D: Generic KMS binding
 resource "google_kms_crypto_key_iam_member" "kms_access" {
-  # ONLY run if a KMS Key ID is actually provided
   count         = var.kms_key_id != null ? 1 : 0 
   
   crypto_key_id = var.kms_key_id
   role          = var.role
   
-  # Logic: Use the identity above if it exists, otherwise use the member_id variable
-  member        = var.service_name != null ? "serviceAccount:${google_project_service_identity.service_identity[0].email}" : var.member_id
+  # Check if the service_identity resource list is actually populated
+  member        = length(google_project_service_identity.service_identity) > 0 ? "serviceAccount:${google_project_service_identity.service_identity[0].email}" : var.member_id
 }
