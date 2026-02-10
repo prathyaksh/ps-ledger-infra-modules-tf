@@ -93,3 +93,8 @@ variable "name" {
   description = "The name prefix for the Cloud SQL instance"
   type        = string
 }
+
+variable "db_password_secret_name" {
+  type        = string
+  description = "The name of the secret to fetch from Secret Manager"
+}

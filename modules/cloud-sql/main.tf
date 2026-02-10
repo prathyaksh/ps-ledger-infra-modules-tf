@@ -37,7 +37,7 @@ resource "google_sql_database" "database" {
 }
 
 data "google_secret_manager_secret_version" "db_password" {
-  secret = "${var.name}-db-password"
+  secret = var.db_password_secret_name
 }
 
 resource "google_sql_user" "db_user" {
