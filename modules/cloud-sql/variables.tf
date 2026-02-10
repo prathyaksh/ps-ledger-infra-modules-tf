@@ -52,6 +52,7 @@ variable "db_password" {
   description = "The password for the database user"
   type        = string
   sensitive   = true
+  default     = null
 }
 variable "vpc_id" {
   description = "The ID or Self Link of the VPC network for private IP"
